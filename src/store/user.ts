@@ -1,11 +1,11 @@
-import { create } from "zustand";
 import { devtools } from "zustand/middleware";
-type User = {
+import { createStore } from "zustand/vanilla";
+export type User = {
   id: number;
-  name: string;
+  userName: string;
   email: string;
-  avatar_url: string;
-  login: string;
+  avatar: string;
+  nickName: string;
 };
 
 type State = {
@@ -16,9 +16,17 @@ type Action = {
   setUser: (user: User) => void;
 };
 
-export const useUserStore = create<State & Action>()(
-  devtools((set) => ({
-    user: {},
-    setUser: (user) => set({ user }),
-  }))
-);
+export const defaultInitState: State = {
+  user: {},
+};
+
+export type UserStore = State & Action;
+
+export const createUserStore = (initState: State = defaultInitState) => {
+  return createStore<UserStore>()(
+    devtools((set) => ({
+      ...initState,
+      setUser: (user) => set({ user }),
+    }))
+  );
+};

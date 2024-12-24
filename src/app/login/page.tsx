@@ -3,9 +3,9 @@ import { Button } from "@nextui-org/button";
 import { Input } from "@nextui-org/input";
 import { Divider } from "@nextui-org/divider";
 import GithubIcon from "@/components/Icons/GiteeIcon";
-import WeChatIcon from "@/components/Icons/WeChatIcon"
-import { useState } from "react";
-import { login } from "@/api/login";
+import WeChatIcon from "@/components/Icons/WeChatIcon";
+import { useEffect, useState } from "react";
+import { checkLogin, login } from "@/api/login";
 import { useRouter } from "next/navigation";
 import { CLIENT_ID, REDIRECT_URL } from "@/common/constant";
 export default function Login() {
@@ -22,6 +22,19 @@ export default function Login() {
       setIsLoading(false);
     }
   };
+
+  const performCheckLogin = async () => {
+    try {
+      await checkLogin();
+    } catch (error) {
+      console.error("Error checking login:", error);
+    }
+  };
+
+  useEffect(() => {
+    performCheckLogin();
+  }, []);
+
   return (
     <div className="h-screen w-screen bg-[#e5e1ec] flex justify-center items-center">
       <div className="w-[500px] h-[500px] min-h-[540px] bg-white rounded-xl px-24 pt-10 flex flex-col gap-5">

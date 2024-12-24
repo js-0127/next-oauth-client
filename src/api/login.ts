@@ -24,9 +24,26 @@ export const githubLogin = async (code: string) => {
 };
 
 //获取用户信息
-
 export const getUserInfo = async () => {
   return request("http://localhost:3001/api/auth/userInfo", {
+    method: "GET",
+    credentials: "include",
+    mode: "cors",
+  });
+};
+
+//登录态
+export const checkLogin = async () => {
+  return request("http://localhost:3001/api/auth", {
+    method: "GET",
+    credentials: "include",
+    mode: "cors",
+  });
+};
+
+//退出登录
+export const logout = async () => {
+  return request("http://localhost:3001/api/auth/logout", {
     method: "GET",
     credentials: "include",
     mode: "cors",
